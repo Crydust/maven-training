@@ -1,0 +1,30 @@
+package com.mycompany.example13;
+
+import com.mycompany.example13.boilerplate.BrowserResource;
+import com.mycompany.example13.model.HelloServletPage;
+import java.util.UUID;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import org.junit.ClassRule;
+import org.junit.Test;
+
+public class HelloServletIT {
+
+    @ClassRule
+    public static BrowserResource browser = new BrowserResource();
+
+    @Test
+    public void helloServletPageLoads() throws Exception {
+        assertThat(browser.openIndexPage().clickHelloServletLink().isCurrentPage(), is(true));
+    }
+
+    @Test
+    public void helloServletPageEchosNickname() throws Exception {
+        final String name = UUID.randomUUID().toString() + " é ' \" \uD83E\uDD84 <plaintext>";
+        final HelloServletPage page = browser
+                .openIndexPage()
+                .clickHelloServletLink()
+                .sayHello(name);
+        assertThat(page.getNicknameOutput(), is(name));
+    }
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mycompany</groupId>
+    <artifactId>maven-training</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>example1</module>
+        <module>example2</module>
+        <module>example3</module>
+        <module>example4</module>
+        <module>example5</module>
+        <module>example6</module>
+        <module>example7</module>
+        <module>example8</module>
+        <module>example9</module>
+        <module>example10</module>
+        <module>example11</module>
+        <module>example12</module>
+        <module>example13</module>
+        <!--
+        TODO
+        - war
+        - selenium test
+        - dealing with (transitive) dependencies
+        -->
+    </modules>
+</project>
