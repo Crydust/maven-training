@@ -102,8 +102,10 @@ public class TodoJspServlet extends HttpServlet {
                 .collect(Collectors.toMap(
                         name -> {
                             final Matcher matcher = DONE_NAME_PATTERN.matcher(name);
-                            matcher.find();
-                            return UUID.fromString(matcher.group(1));
+                            if (matcher.find()) {
+                                return UUID.fromString(matcher.group(1));
+                            }
+                            throw new AssertionError("impossible: the filter prevents non-matches from happening");
                         },
                         parameterNames::contains))
                 .forEach(todoList::setDoneById);
