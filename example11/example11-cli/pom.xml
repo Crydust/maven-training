@@ -4,7 +4,7 @@
     <parent>
         <artifactId>example11</artifactId>
         <groupId>com.mycompany.example11</groupId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>example11-cli</artifactId>
     <properties>

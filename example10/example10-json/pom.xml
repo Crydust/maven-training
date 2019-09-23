@@ -4,7 +4,7 @@
     <parent>
         <artifactId>example10</artifactId>
         <groupId>com.mycompany.example10</groupId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>example10-json</artifactId>
     <dependencies>
