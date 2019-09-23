@@ -14,6 +14,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class BrowserResource extends ExternalResource {
 
     private String baseURL;
@@ -30,14 +32,34 @@ public class BrowserResource extends ExternalResource {
             browserName = config.getProperty("browserName");
         }
         switch (browserName) {
-            case "chrome": driver = new ChromeDriver(); break;
-            case "edge": driver = new EdgeDriver(); break;
-            case "firefox": driver = new FirefoxDriver(); break;
-            case "htmlunit": driver = new HtmlUnitDriver(); break;
-            case "ie": driver = new InternetExplorerDriver(); break;
-            case "opera": driver = new OperaDriver(); break;
-            case "safari": driver = new SafariDriver(); break;
-            default: throw new RuntimeException("unknown browserName");
+            case "chrome":
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+                break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                driver = new EdgeDriver();
+                break;
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+                break;
+            case "htmlunit":
+                driver = new HtmlUnitDriver();
+                break;
+            case "ie":
+                WebDriverManager.iedriver().setup();
+                driver = new InternetExplorerDriver();
+                break;
+            case "opera":
+                WebDriverManager.operadriver().setup();
+                driver = new OperaDriver();
+                break;
+            case "safari":
+                driver = new SafariDriver();
+                break;
+            default:
+                throw new RuntimeException("unknown browserName");
         }
     }
 
