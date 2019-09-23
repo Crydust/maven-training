@@ -14,16 +14,17 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>9</maven.compiler.source>
-        <maven.compiler.target>9</maven.compiler.target>
-        <json.version>20170516</json.version>
-        <junit.version>4.12</junit.version>
-        <hamcrest.version>1.3</hamcrest.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.release>11</maven.compiler.release>
+        <json.version>20190722</json.version>
+        <junit.version>5.5.2</junit.version>
+        <hamcrest.version>2.1</hamcrest.version>
         <!-- maven-compiler-plugin:3.7.0 is the first one to truly support module-info.java -->
-        <compiler-plugin.version>3.7.0</compiler-plugin.version>
-        <failsafe-plugin.version>2.20.1</failsafe-plugin.version>
-        <jacoco-plugin.version>0.7.9</jacoco-plugin.version>
-        <assembly-plugin.version>3.1.0</assembly-plugin.version>
+        <compiler-plugin.version>3.8.1</compiler-plugin.version>
+        <failsafe-plugin.version>2.22.2</failsafe-plugin.version>
+        <jacoco-plugin.version>0.8.4</jacoco-plugin.version>
+        <assembly-plugin.version>3.1.1</assembly-plugin.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -48,18 +49,18 @@
                 <version>${json.version}</version>
             </dependency>
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
                 <version>${junit.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hamcrest</groupId>
-                <artifactId>hamcrest-core</artifactId>
-                <version>${hamcrest.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hamcrest</groupId>
-                <artifactId>hamcrest-library</artifactId>
+                <artifactId>hamcrest</artifactId>
                 <version>${hamcrest.version}</version>
             </dependency>
         </dependencies>

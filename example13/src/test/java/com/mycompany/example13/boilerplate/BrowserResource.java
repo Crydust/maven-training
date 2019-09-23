@@ -1,20 +1,24 @@
 package com.mycompany.example13.boilerplate;
 
-import com.mycompany.example13.model.IndexPage;
 import java.io.InputStream;
 import java.util.Properties;
-import org.junit.rules.ExternalResource;
+
+import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-public class BrowserResource extends ExternalResource {
+import com.mycompany.example13.model.IndexPage;
+
+public class BrowserResource implements BeforeAllCallback, AfterAllCallback {
 
     private String baseURL;
     private String browserName;
@@ -22,7 +26,7 @@ public class BrowserResource extends ExternalResource {
     private WebDriver driver;
 
     @Override
-    protected void before() throws Throwable {
+    public void beforeAll(ExtensionContext context) throws Exception {
         final Properties config = new Properties();
         try (InputStream in = BrowserResource.class.getResourceAsStream("/example13.properties")) {
             config.load(in);
@@ -42,7 +46,7 @@ public class BrowserResource extends ExternalResource {
     }
 
     @Override
-    protected void after() {
+    public void afterAll(ExtensionContext context) throws Exception {
         if (driver != null) {
             driver.quit();
         }

@@ -1,14 +1,16 @@
 package com.mycompany.example13;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
 import com.mycompany.example13.boilerplate.BrowserResource;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import org.junit.ClassRule;
-import org.junit.Test;
 
 public class IndexPageIT {
 
-    @ClassRule
+    @RegisterExtension
     public static BrowserResource browser = new BrowserResource();
 
     @Test

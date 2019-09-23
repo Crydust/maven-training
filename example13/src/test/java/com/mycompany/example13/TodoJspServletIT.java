@@ -1,20 +1,23 @@
 package com.mycompany.example13;
 
-import com.mycompany.example13.boilerplate.BrowserResource;
-import com.mycompany.example13.model.TodoJspServletPage;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import org.junit.ClassRule;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
+import com.mycompany.example13.boilerplate.BrowserResource;
+import com.mycompany.example13.model.TodoJspServletPage;
 
 public class TodoJspServletIT {
 
-    @ClassRule
+    @RegisterExtension
     public static BrowserResource browser = new BrowserResource();
 
     @Test

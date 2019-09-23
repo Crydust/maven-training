@@ -1,5 +1,5 @@
 module com.mycompany.example11.json {
-    requires json;
+    requires org.json;
     requires com.mycompany.example11.api;
     requires com.mycompany.example11.core;
     provides com.mycompany.example11.api.ExpressionParser
