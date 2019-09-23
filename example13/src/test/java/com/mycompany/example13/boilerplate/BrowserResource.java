@@ -11,12 +11,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import com.mycompany.example13.model.IndexPage;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BrowserResource implements BeforeAllCallback, AfterAllCallback {
 
@@ -34,19 +36,39 @@ public class BrowserResource implements BeforeAllCallback, AfterAllCallback {
             browserName = config.getProperty("browserName");
         }
         switch (browserName) {
-            case "chrome": driver = new ChromeDriver(); break;
-            case "edge": driver = new EdgeDriver(); break;
-            case "firefox": driver = new FirefoxDriver(); break;
-            case "htmlunit": driver = new HtmlUnitDriver(); break;
-            case "ie": driver = new InternetExplorerDriver(); break;
-            case "opera": driver = new OperaDriver(); break;
-            case "safari": driver = new SafariDriver(); break;
-            default: throw new RuntimeException("unknown browserName");
+            case "chrome":
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+                break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                driver = new EdgeDriver();
+                break;
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+                break;
+            case "htmlunit":
+                driver = new HtmlUnitDriver();
+                break;
+            case "ie":
+                WebDriverManager.iedriver().setup();
+                driver = new InternetExplorerDriver();
+                break;
+            case "opera":
+                WebDriverManager.operadriver().setup();
+                driver = new OperaDriver();
+                break;
+            case "safari":
+                driver = new SafariDriver();
+                break;
+            default:
+                throw new RuntimeException("unknown browserName");
         }
     }
 
     @Override
-    public void afterAll(ExtensionContext context) throws Exception {
+    public void afterAll(ExtensionContext context) {
         if (driver != null) {
             driver.quit();
         }
@@ -66,7 +88,7 @@ public class BrowserResource implements BeforeAllCallback, AfterAllCallback {
         return String.format("JSESSIONID=%s; Path=%s%s%s",
                 cookie.getValue(),
                 cookie.getPath(),
-                cookie.isSecure()? "; Secure" : "",
+                cookie.isSecure() ? "; Secure" : "",
                 cookie.isHttpOnly() ? "; HttpOnly" : "");
     }
 }

@@ -12,9 +12,10 @@
         <junit.version>5.5.2</junit.version>
         <hamcrest.version>2.1</hamcrest.version>
         <selenium.version>3.5.3</selenium.version>
-        <htmlunit-driver.version>2.36.0</htmlunit-driver.version>
         <commons-lang3.version>3.5</commons-lang3.version>
         <commons-text.version>1.5</commons-text.version>
+        <webdrivermanager.version>3.7.1</webdrivermanager.version>
+        <slf4j.version>1.7.28</slf4j.version>
     </properties>
     <dependencies>
         <dependency>
@@ -58,6 +59,18 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
@@ -67,6 +80,24 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
             <version>${commons-text.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>${slf4j.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
