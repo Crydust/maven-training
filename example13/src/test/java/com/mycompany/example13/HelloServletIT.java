@@ -1,20 +1,19 @@
 package com.mycompany.example13;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-import java.util.UUID;
-
+import com.mycompany.example13.boilerplate.BrowserResource;
+import com.mycompany.example13.model.HelloServletPage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import com.mycompany.example13.boilerplate.BrowserResource;
-import com.mycompany.example13.model.HelloServletPage;
+import java.util.UUID;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class HelloServletIT {
 
     @RegisterExtension
-    public static BrowserResource browser = new BrowserResource();
+    public final BrowserResource browser = new BrowserResource();
 
     @Test
     public void helloServletPageLoads() throws Exception {

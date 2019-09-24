@@ -1,82 +1,52 @@
 package com.mycompany.example13.boilerplate;
 
-import java.io.InputStream;
-import java.util.Properties;
-
-import org.junit.jupiter.api.extension.AfterAllCallback;
-import org.junit.jupiter.api.extension.BeforeAllCallback;
+import com.mycompany.example13.model.IndexPage;
+import org.apache.commons.pool2.ObjectPool;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.safari.SafariDriver;
 
-import com.mycompany.example13.model.IndexPage;
+import java.io.IOException;
+import java.util.Properties;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+public class BrowserResource implements BeforeEachCallback, AfterEachCallback {
 
-public class BrowserResource implements BeforeAllCallback, AfterAllCallback {
-
-    private String baseURL;
-    private String browserName;
-
+    private static final String baseURL;
+    private static final ObjectPool<WebDriver> driverPool;
     private WebDriver driver;
 
-    @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
-        final Properties config = new Properties();
-        try (InputStream in = BrowserResource.class.getResourceAsStream("/example13.properties")) {
-            config.load(in);
-            baseURL = config.getProperty("baseURL");
-            browserName = config.getProperty("browserName");
+    static {
+        final Properties config;
+        try {
+            config = BrowserResourceHelper.readConfiguration();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        switch (browserName) {
-            case "chrome":
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
-                break;
-            case "edge":
-                WebDriverManager.edgedriver().setup();
-                driver = new EdgeDriver();
-                break;
-            case "firefox":
-                WebDriverManager.firefoxdriver().setup();
-                driver = new FirefoxDriver();
-                break;
-            case "htmlunit":
-                driver = new HtmlUnitDriver();
-                break;
-            case "ie":
-                WebDriverManager.iedriver().setup();
-                driver = new InternetExplorerDriver();
-                break;
-            case "opera":
-                WebDriverManager.operadriver().setup();
-                driver = new OperaDriver();
-                break;
-            case "safari":
-                driver = new SafariDriver();
-                break;
-            default:
-                throw new RuntimeException("unknown browserName");
-        }
+        baseURL = config.getProperty("baseURL");
+        final String browserName = config.getProperty("browserName", "htmlunit");
+        final int maxBrowserInstances = Integer.parseInt(config.getProperty("maxBrowserInstances", "1"));
+        driverPool = BrowserResourceHelper.createDriverPool(browserName, maxBrowserInstances);
     }
 
     @Override
-    public void afterAll(ExtensionContext context) {
-        if (driver != null) {
-            driver.quit();
-        }
+    public void beforeEach(ExtensionContext context) throws Exception {
+        driver = driverPool.borrowObject();
+    }
+
+    @Override
+    public void afterEach(ExtensionContext context) throws Exception {
+        driverPool.returnObject(driver);
+    }
+
+    private WebDriver getDriver() {
+        return driver;
     }
 
     public IndexPage openIndexPage() {
-        driver.get(baseURL);
-        return IndexPage.init(driver);
+        getDriver().get(baseURL);
+        return IndexPage.init(getDriver());
     }
 
     public String getBaseURL() {
@@ -84,11 +54,12 @@ public class BrowserResource implements BeforeAllCallback, AfterAllCallback {
     }
 
     public String getSessionCookie() {
-        Cookie cookie = driver.manage().getCookieNamed("JSESSIONID");
+        Cookie cookie = getDriver().manage().getCookieNamed("JSESSIONID");
         return String.format("JSESSIONID=%s; Path=%s%s%s",
                 cookie.getValue(),
                 cookie.getPath(),
                 cookie.isSecure() ? "; Secure" : "",
                 cookie.isHttpOnly() ? "; HttpOnly" : "");
     }
+
 }

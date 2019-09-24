@@ -1,7 +1,9 @@
 package com.mycompany.example13;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import com.mycompany.example13.boilerplate.BrowserResource;
+import com.mycompany.example13.model.TodoJspServletPage;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -9,16 +11,13 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
-
-import com.mycompany.example13.boilerplate.BrowserResource;
-import com.mycompany.example13.model.TodoJspServletPage;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class TodoJspServletIT {
 
     @RegisterExtension
-    public static BrowserResource browser = new BrowserResource();
+    public final BrowserResource browser = new BrowserResource();
 
     @Test
     public void todoServletPageLoads() throws Exception {

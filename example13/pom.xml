@@ -17,6 +17,7 @@
         <webdrivermanager.version>4.3.1</webdrivermanager.version>
         <slf4j.version>1.7.30</slf4j.version>
         <htmlunit-driver.version>2.47.1</htmlunit-driver.version>
+        <commons-pool2.version>2.8.0</commons-pool2.version>
     </properties>
     <dependencies>
         <dependency>
@@ -88,6 +89,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
             <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>${commons-pool2.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
