@@ -1,5 +1,7 @@
 package com.mycompany.example13.boilerplate;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.urlToBe;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -18,6 +20,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -63,10 +66,11 @@ class BrowserResourceHelper {
         }
 
         @Override
-        public void passivateObject(PooledObject<WebDriver> p) {
+        public void activateObject(PooledObject<WebDriver> p) {
             final WebDriver driver = p.getObject();
             if (driver != null) {
                 driver.get("about:blank");
+                new WebDriverWait(driver, 10).until(urlToBe("about:blank"));
                 driver.manage().deleteAllCookies();
             }
         }
