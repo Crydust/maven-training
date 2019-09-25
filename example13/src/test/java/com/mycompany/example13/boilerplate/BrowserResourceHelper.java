@@ -1,6 +1,11 @@
 package com.mycompany.example13.boilerplate;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import static org.openqa.selenium.support.ui.ExpectedConditions.urlToBe;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.PooledObject;
@@ -17,11 +22,7 @@ import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.urlToBe;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 class BrowserResourceHelper {
 
@@ -41,7 +42,8 @@ class BrowserResourceHelper {
 
     private static GenericObjectPoolConfig<WebDriver> createConfig(int maxBrowserInstances) {
         final GenericObjectPoolConfig<WebDriver> poolConfig = new GenericObjectPoolConfig<>();
-        poolConfig.setMaxIdle(1);
+        poolConfig.setJmxEnabled(false);
+        poolConfig.setMaxIdle(maxBrowserInstances);
         poolConfig.setMaxTotal(maxBrowserInstances);
         poolConfig.setMinIdle(0);
         return poolConfig;
@@ -74,9 +76,9 @@ class BrowserResourceHelper {
 
         @Override
         public void destroyObject(PooledObject<WebDriver> pooledObject) {
-            final WebDriver wrappedDriver = pooledObject.getObject();
-            if (wrappedDriver != null) {
-                wrappedDriver.quit();
+            final WebDriver driver = pooledObject.getObject();
+            if (driver != null) {
+                driver.quit();
             }
         }
 
