@@ -5,6 +5,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.urlToBe;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.ObjectPool;
@@ -68,19 +69,28 @@ class BrowserResourceHelper {
         @Override
         public void activateObject(PooledObject<WebDriver> p) {
             final WebDriver driver = p.getObject();
-            if (driver != null) {
-                driver.get("about:blank");
-                new WebDriverWait(driver, 10).until(urlToBe("about:blank"));
-                driver.manage().deleteAllCookies();
+
+            String originalHandle = driver.getWindowHandle();
+            final Set<String> windowHandles = driver.getWindowHandles();
+            if (windowHandles.size() > 1) {
+                for (String handle : windowHandles) {
+                    if (!handle.equals(originalHandle)) {
+                        driver.switchTo().window(handle);
+                        driver.close();
+                    }
+                }
+                driver.switchTo().window(originalHandle);
             }
+
+            driver.get("about:blank");
+            new WebDriverWait(driver, 10).until(urlToBe("about:blank"));
+
+            driver.manage().deleteAllCookies();
         }
 
         @Override
         public void destroyObject(PooledObject<WebDriver> pooledObject) {
-            final WebDriver driver = pooledObject.getObject();
-            if (driver != null) {
-                driver.quit();
-            }
+            pooledObject.getObject().quit();
         }
     }
 
