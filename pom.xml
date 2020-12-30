@@ -19,11 +19,6 @@
         <module>example11</module>
         <module>example12</module>
         <module>example13</module>
-        <!--
-        TODO
-        - war
-        - selenium test
-        - dealing with (transitive) dependencies
-        -->
+        <module>example14</module>
     </modules>
 </project>
