@@ -9,8 +9,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <junit.version>5.5.2</junit.version>
-        <hamcrest.version>2.1</hamcrest.version>
+        <junit.version>5.7.0</junit.version>
+        <hamcrest.version>2.2</hamcrest.version>
         <selenium.version>3.141.59</selenium.version>
         <commons-lang3.version>3.5</commons-lang3.version>
         <commons-text.version>1.5</commons-text.version>
