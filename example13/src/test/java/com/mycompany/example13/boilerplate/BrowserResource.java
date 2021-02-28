@@ -3,7 +3,6 @@ package com.mycompany.example13.boilerplate;
 import com.mycompany.example13.model.IndexPage;
 import org.apache.commons.pool2.ObjectPool;
 import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 import java.io.IOException;
 import java.util.Properties;
 
-public class BrowserResource implements BeforeEachCallback, AfterEachCallback {
+public class BrowserResource implements AfterEachCallback {
 
     private static final String baseURL;
     private static final ObjectPool<WebDriver> driverPool;
@@ -31,16 +30,20 @@ public class BrowserResource implements BeforeEachCallback, AfterEachCallback {
     }
 
     @Override
-    public void beforeEach(ExtensionContext context) throws Exception {
-        driver = driverPool.borrowObject();
-    }
-
-    @Override
     public void afterEach(ExtensionContext context) throws Exception {
-        driverPool.returnObject(driver);
+        if (driver != null) {
+            driverPool.returnObject(driver);
+        }
     }
 
     private WebDriver getDriver() {
+        if (driver == null) {
+            try {
+                driver = driverPool.borrowObject();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
         return driver;
     }
 
