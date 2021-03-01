@@ -1,7 +1,6 @@
 package com.mycompany.example13.boilerplate;
 
-import java.io.IOException;
-import java.util.Properties;
+import static com.mycompany.example13.boilerplate.WebDriverFactory.createDriverPool;
 
 import org.apache.commons.pool2.ObjectPool;
 import org.junit.jupiter.api.extension.AfterEachCallback;
@@ -13,28 +12,9 @@ import com.mycompany.example13.model.IndexPage;
 
 public class BrowserResource implements AfterEachCallback {
 
-    private static final String baseURL;
-    private static final String browserName;
-    private static final int maxBrowserInstances;
-    private static final ObjectPool<WebDriver> driverPool;
+    private static final Configuration configuration = Configuration.readConfiguration();
+    private static final ObjectPool<WebDriver> driverPool = createDriverPool(configuration.getBrowserName(), configuration.getMaxBrowserInstances());
     private WebDriver driver;
-
-    static {
-        final Properties config;
-        try {
-            config = BrowserResourceHelper.readConfiguration();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        baseURL = config.getProperty("baseURL");
-        browserName = config.getProperty("browserName", "htmlunit");
-        if ("ie".equals(browserName)) {
-            maxBrowserInstances = 1;
-        } else {
-            maxBrowserInstances = Integer.parseInt(config.getProperty("maxBrowserInstances", "1"));
-        }
-        driverPool = BrowserResourceHelper.createDriverPool(browserName, maxBrowserInstances);
-    }
 
     @Override
     public void afterEach(ExtensionContext context) throws Exception {
@@ -55,7 +35,7 @@ public class BrowserResource implements AfterEachCallback {
     }
 
     public boolean getDriverOnlySupportsCharactersInTheBMP() {
-        switch (browserName) {
+        switch (configuration.getBrowserName()) {
             case "chrome": /* falls through */
             case "edge":
                 return true;
@@ -70,12 +50,12 @@ public class BrowserResource implements AfterEachCallback {
     }
 
     public IndexPage openIndexPage() {
-        getDriver().get(baseURL);
+        getDriver().get(configuration.getBaseURL());
         return IndexPage.init(getDriver());
     }
 
     public String getBaseURL() {
-        return baseURL;
+        return configuration.getBaseURL();
     }
 
     public String getSessionCookie() {
