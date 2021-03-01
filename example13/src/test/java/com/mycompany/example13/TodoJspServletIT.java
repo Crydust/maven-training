@@ -1,9 +1,7 @@
 package com.mycompany.example13;
 
-import com.mycompany.example13.boilerplate.BrowserResource;
-import com.mycompany.example13.model.TodoJspServletPage;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -11,21 +9,24 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class TodoJspServletIT {
+import com.mycompany.example13.boilerplate.BrowserResource;
+import com.mycompany.example13.model.TodoJspServletPage;
+
+class TodoJspServletIT {
 
     @RegisterExtension
-    public final BrowserResource browser = new BrowserResource();
+    final BrowserResource browser = new BrowserResource();
 
     @Test
-    public void todoServletPageLoads() throws Exception {
+    void todoServletPageLoads() {
         assertThat(browser.openIndexPage().clickTodoJspServletLink().isCurrentPage(), is(true));
     }
 
     @Test
-    public void addWorks() throws Exception {
+    void addWorks() {
         final String label1 = UUID.randomUUID().toString();
         final String label2;
         if (browser.getDriverOnlySupportsCharactersInTheBMP()) {
@@ -47,7 +48,7 @@ public class TodoJspServletIT {
     }
 
     @Test
-    public void saveWorks() throws Exception {
+    void saveWorks() {
         final String label1 = UUID.randomUUID().toString();
         final String label2;
         if (browser.getDriverOnlySupportsCharactersInTheBMP()) {
@@ -78,7 +79,7 @@ public class TodoJspServletIT {
     }
 
     @Test
-    public void csrfFilterStopsIntruder() throws Exception {
+    void csrfFilterStopsIntruder() throws Exception {
         TodoJspServletPage page = browser.openIndexPage().clickTodoJspServletLink();
         assertThat(page.contains("Good"), is(false));
         assertThat(page.contains("Bad"), is(false));
