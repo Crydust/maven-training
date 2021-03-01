@@ -15,6 +15,7 @@ public class BrowserResource implements AfterEachCallback {
 
     private static final String baseURL;
     private static final String browserName;
+    private static final int maxBrowserInstances;
     private static final ObjectPool<WebDriver> driverPool;
     private WebDriver driver;
 
@@ -27,7 +28,11 @@ public class BrowserResource implements AfterEachCallback {
         }
         baseURL = config.getProperty("baseURL");
         browserName = config.getProperty("browserName", "htmlunit");
-        final int maxBrowserInstances = Integer.parseInt(config.getProperty("maxBrowserInstances", "1"));
+        if ("ie".equals(browserName)) {
+            maxBrowserInstances = 1;
+        } else {
+            maxBrowserInstances = Integer.parseInt(config.getProperty("maxBrowserInstances", "1"));
+        }
         driverPool = BrowserResourceHelper.createDriverPool(browserName, maxBrowserInstances);
     }
 
