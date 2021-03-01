@@ -1,11 +1,11 @@
 package com.mycompany.example12.boilerplate.web;
 
-import com.mycompany.example12.boilerplate.text.NihStringUtil;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Base64;
 import java.util.UUID;
 import java.util.logging.Logger;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
+
+import com.mycompany.example12.boilerplate.text.NihStringUtil;
 
 /**
  * Adds a CSRFToken to all urls encoded with encodeURL or encodeRedirectURL. In
@@ -87,11 +89,13 @@ public class NihCsrfFilter implements Filter {
             this.token = token;
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public String encodeRedirectUrl(String url) {
             return this.encodeRedirectURL(url);
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public String encodeUrl(String url) {
             return this.encodeURL(url);
