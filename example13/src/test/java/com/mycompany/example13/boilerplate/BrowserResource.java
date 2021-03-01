@@ -1,18 +1,20 @@
 package com.mycompany.example13.boilerplate;
 
-import com.mycompany.example13.model.IndexPage;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.apache.commons.pool2.ObjectPool;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 
-import java.io.IOException;
-import java.util.Properties;
+import com.mycompany.example13.model.IndexPage;
 
 public class BrowserResource implements AfterEachCallback {
 
     private static final String baseURL;
+    private static final String browserName;
     private static final ObjectPool<WebDriver> driverPool;
     private WebDriver driver;
 
@@ -24,7 +26,7 @@ public class BrowserResource implements AfterEachCallback {
             throw new RuntimeException(e);
         }
         baseURL = config.getProperty("baseURL");
-        final String browserName = config.getProperty("browserName", "htmlunit");
+        browserName = config.getProperty("browserName", "htmlunit");
         final int maxBrowserInstances = Integer.parseInt(config.getProperty("maxBrowserInstances", "1"));
         driverPool = BrowserResourceHelper.createDriverPool(browserName, maxBrowserInstances);
     }
@@ -45,6 +47,21 @@ public class BrowserResource implements AfterEachCallback {
             }
         }
         return driver;
+    }
+
+    public boolean getDriverOnlySupportsCharactersInTheBMP() {
+        switch (browserName) {
+            case "chrome": /* falls through */
+            case "edge":
+                return true;
+            case "firefox": /* falls through */
+            case "htmlunit": /* falls through */
+            case "ie": /* falls through */
+            case "opera": /* falls through */
+            case "safari": /* falls through */
+            default:
+                return false;
+        }
     }
 
     public IndexPage openIndexPage() {

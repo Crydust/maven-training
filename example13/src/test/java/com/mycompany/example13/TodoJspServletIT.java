@@ -27,7 +27,12 @@ public class TodoJspServletIT {
     @Test
     public void addWorks() throws Exception {
         final String label1 = UUID.randomUUID().toString();
-        final String label2 = UUID.randomUUID().toString() + " é ' \" \uD83E\uDD84 <plaintext>";
+        final String label2;
+        if (browser.getDriverOnlySupportsCharactersInTheBMP()) {
+            label2 = UUID.randomUUID().toString() + " é ' \" _uD83E_uDD84 <plaintext>";
+        } else {
+            label2 = UUID.randomUUID().toString() + " é ' \" \uD83E\uDD84 <plaintext>";
+        }
         TodoJspServletPage page = browser.openIndexPage().clickTodoJspServletLink();
         assertThat("is not present before adding", page.contains(label1), is(false));
         page.add(label1);
@@ -44,7 +49,12 @@ public class TodoJspServletIT {
     @Test
     public void saveWorks() throws Exception {
         final String label1 = UUID.randomUUID().toString();
-        final String label2 = UUID.randomUUID().toString() + " é ' \" \uD83E\uDD84 <plaintext>";
+        final String label2;
+        if (browser.getDriverOnlySupportsCharactersInTheBMP()) {
+            label2 = UUID.randomUUID().toString() + " é ' \" _uD83E_uDD84 <plaintext>";
+        } else {
+            label2 = UUID.randomUUID().toString() + " é ' \" \uD83E\uDD84 <plaintext>";
+        }
         TodoJspServletPage page = browser.openIndexPage().clickTodoJspServletLink();
         assertThat("is not present before adding", page.contains(label1), is(false));
         assertThat("is not present before adding", page.contains(label2), is(false));
