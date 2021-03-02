@@ -46,7 +46,7 @@ public class Configuration {
             }
 
             final int maxBrowserInstances;
-            if ("ie".equals(browserName)) {
+            if (Arrays.asList("ie", "safari").contains(browserName)) {
                 maxBrowserInstances = 1;
             } else {
                 maxBrowserInstances = Integer.parseInt(properties.getProperty("maxBrowserInstances", "1"));
