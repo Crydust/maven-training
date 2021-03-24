@@ -153,7 +153,8 @@ public enum FileType implements Predicate<byte[]> {
 
     @Override
     public boolean test(byte[] bytes) {
-        return this.predicate.test(bytes);
+        return bytes.length >= this.size
+                && this.predicate.test(bytes);
     }
 
     private int size() {
@@ -250,21 +251,21 @@ public enum FileType implements Predicate<byte[]> {
         return val;
     }
 
-    static Optional<FileType> determineFileType(final InputStream in) throws IOException {
+    private static Optional<FileType> determineFileType(final InputStream in) throws IOException {
         return determineFileType(in, FileType.values());
     }
 
-    static Optional<FileType> determineFileType(final InputStream in, final String fileName) throws IOException {
+    private static Optional<FileType> determineFileType(final InputStream in, final String fileName) throws IOException {
         return determineFileType(in, determineFileTypeByFileName(fileName));
     }
 
-    static FileType[] determineFileTypeByFileName(String fileName) {
+    private static FileType[] determineFileTypeByFileName(String fileName) {
         return Arrays.stream(FileType.values())
                 .filter(it -> it.fileNameMatches(fileName))
                 .toArray(FileType[]::new);
     }
 
-    static Optional<FileType> determineFileType(final InputStream in, final FileType... fileTypes) throws IOException {
+    private static Optional<FileType> determineFileType(final InputStream in, final FileType... fileTypes) throws IOException {
         requireNonNull(in, "in");
         if (!in.markSupported()) {
             throw new IllegalArgumentException("InputStream doesn't support mark");
