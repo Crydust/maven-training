@@ -12,18 +12,57 @@ import static java.nio.charset.StandardCharsets.US_ASCII;
 import static java.util.Objects.requireNonNull;
 
 public enum FileType implements Predicate<byte[]> {
+    ASF(
+            Pattern.compile("(?i).*\\.(?:asf|wma|wmv)"),
+            new Magic(hex("3026B2758E66CF11A6D900AA0062CE6C"))
+    ),
+    AVI(
+            Pattern.compile("(?i).*\\.avi"),
+            new Magic(
+                    new MagicPart("RIFF"),
+                    new MagicPart(8, "AVI")
+            )
+    ),
     BMP(
-            Pattern.compile("(?i).*\\.bmp"),
+            Pattern.compile("(?i).*\\.(?:bmp|dib)"),
             new Magic("BM")
+    ),
+    CHM(
+            Pattern.compile("(?i).*\\.chm"),
+            new Magic(hex("495453460300000060000000"))
     ),
     CLASS(
             Pattern.compile("(?i).*\\.class"),
             new Magic(hex("CAFEBABE"))
     ),
+    COM(
+            Pattern.compile("(?i).*\\.com"),
+            new Magic(hex("C9"))
+    ),
+    DMG(
+            Pattern.compile("(?i).*\\.dmg"),
+            new Magic(hex("7801730D626260"))
+    ),
+    EXE (
+            Pattern.compile("(?i).*\\.exe"),
+            new Magic("ZM")
+    ),
+    FLAC(
+            Pattern.compile("(?i).*\\.flac"),
+            new Magic("fLaC")
+    ),
+    FLIF(
+            Pattern.compile("(?i).*\\.flif"),
+            new Magic("FLIF")
+    ),
     GIF(
             Pattern.compile("(?i).*\\.gif"),
             new Magic("GIF87a"),
             new Magic("GIF89a")
+    ),
+    GZIP(
+            Pattern.compile("(?i).*\\.gz"),
+            new Magic(hex("1F8B"))
     ),
     HEIC(
             Pattern.compile("(?i).*\\.(?:heif|heifs|heic|heics|avci|avcs|avif|avifs)"),
@@ -35,10 +74,6 @@ public enum FileType implements Predicate<byte[]> {
             new Magic(4, "ftypheis"),
             new Magic(4, "ftyphevm"),
             new Magic(4, "ftyphevs")
-    ),
-    GZIP(
-            Pattern.compile("(?i).*\\.gz"),
-            new Magic(hex("1F8B"))
     ),
     ICO(
             Pattern.compile("(?i).*\\.ico"),
@@ -66,12 +101,20 @@ public enum FileType implements Predicate<byte[]> {
             new Magic(hex("FF0A")),
             new Magic(hex("0000000C4A584C200D0A870A"))
     ),
+    MATROSKA(
+            Pattern.compile("(?i).*\\.(?:mkv|mka|mks|mk3d|webm)"),
+            new Magic(hex("1A45DFA3"))
+    ),
+    MIDI(
+            Pattern.compile("(?i).*\\.midi?"),
+            new Magic("MThd")
+    ),
     MP3(
             Pattern.compile("(?i).*\\.mp3"),
             new Magic(hex("FFFB")),
             new Magic(hex("FFF3")),
             new Magic(hex("FFF2")),
-            new Magic(hex("494433"))
+            new Magic("ID3")
     ),
     MS_OFFICE(
             Pattern.compile("(?i).*\\.(?:doc|xls|ppt|msg)"),
@@ -92,6 +135,10 @@ public enum FileType implements Predicate<byte[]> {
     RTF(
             Pattern.compile("(?i).*\\.rtf"),
             new Magic("{\\rtf1")
+    ),
+    SEVEN_ZIP(
+            Pattern.compile("(?i).*\\.7z"),
+            new Magic(hex("377ABCAF271C"))
     ),
     TIFF(
             Pattern.compile("(?i).*\\.tiff?"),
