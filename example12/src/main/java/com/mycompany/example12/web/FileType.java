@@ -28,7 +28,18 @@ public enum FileType implements Predicate<byte[]> {
     ),
     GZIP(new Magic(new byte[]{(byte) 0X1F, (byte) 0x8B})),
     ICO(new Magic(new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00})),
-    JPEG(new Magic(new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF})),
+    JPEG(
+            new Magic(new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xDB}),
+            new Magic(
+                    new MagicPart(0, new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xE0}),
+                    new MagicPart(6, "JFIF")
+            ),
+            new Magic(new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xEE}),
+            new Magic(
+                    new MagicPart(0, new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xE1}),
+                    new MagicPart(6, "Exif")
+            )
+    ),
     JPEG2000(new Magic(new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x0C, (byte) 0x6A, (byte) 0x50, (byte) 0x20, (byte) 0x20, (byte) 0x0D, (byte) 0x0A, (byte) 0x87, (byte) 0x0A})),
     JPEGXL(
             new Magic(new byte[]{(byte) 0xFF, (byte) 0x0A}),
