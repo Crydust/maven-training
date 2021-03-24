@@ -177,7 +177,8 @@ public enum FileType implements Predicate<byte[]> {
         final int read = in.read(bytes);
         in.reset();
         if (read < 1) {
-            throw new IllegalArgumentException("The InputStream is empty.");
+            // The InputStream is empty
+            return Optional.empty();
         }
         return Arrays.stream(fileTypes)
                 .filter(it -> it.size() <= read)
