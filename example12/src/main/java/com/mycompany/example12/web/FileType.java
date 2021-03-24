@@ -46,7 +46,6 @@ public enum FileType implements Predicate<byte[]> {
     PDF(new Magic(new byte[]{(byte) 0x25, (byte) 0x50, (byte) 0x44, (byte) 0x46, (byte) 0x2d})),
     PNG(new Magic(new byte[]{(byte) 0x89, (byte) 0x50, (byte) 0x4E, (byte) 0x47, (byte) 0x0D, (byte) 0x0A, (byte) 0x1A, (byte) 0x0A})),
     RTF(new Magic("{\\rtf1")),
-    TAR(new Magic(257, "ustar ")),
     TIFF(
             new Magic(new byte[]{(byte) 0x49, (byte) 0x49, (byte) 0x2A, (byte) 0x00}),
             new Magic(new byte[]{(byte) 0x4D, (byte) 0x4D, (byte) 0x00, (byte) 0x2A})
