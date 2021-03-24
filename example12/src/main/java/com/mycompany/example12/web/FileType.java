@@ -3,6 +3,7 @@ package com.mycompany.example12.web;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -17,7 +18,7 @@ public enum FileType implements Predicate<byte[]> {
     ),
     CLASS(
             Pattern.compile("(?i).*\\.class"),
-            new Magic(new byte[]{(byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE})
+            new Magic(hex("CAFEBABE"))
     ),
     GIF(
             Pattern.compile("(?i).*\\.gif"),
@@ -37,44 +38,44 @@ public enum FileType implements Predicate<byte[]> {
     ),
     GZIP(
             Pattern.compile("(?i).*\\.gz"),
-            new Magic(new byte[]{(byte) 0X1F, (byte) 0x8B})
+            new Magic(hex("1F8B"))
     ),
     ICO(
             Pattern.compile("(?i).*\\.ico"),
-            new Magic(new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00})
+            new Magic(hex("00000100"))
     ),
     JPEG(
             Pattern.compile("(?i).*\\.jpe?g"),
-            new Magic(new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xDB}),
+            new Magic(hex("FFD8FFDB")),
             new Magic(
-                    new MagicPart(0, new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xE0}),
+                    new MagicPart(hex("FFD8FFE0")),
                     new MagicPart(6, "JFIF")
             ),
-            new Magic(new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xEE}),
+            new Magic(hex("FFD8FFEE")),
             new Magic(
-                    new MagicPart(0, new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xE1}),
+                    new MagicPart(hex("FFD8FFE1")),
                     new MagicPart(6, "Exif")
             )
     ),
     JPEG2000(
             Pattern.compile("(?i).*\\.(?:jp2|j2k|jpf|jpm|jpg2|j2c|jpc|jpx|mj2)"),
-            new Magic(new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x0C, (byte) 0x6A, (byte) 0x50, (byte) 0x20, (byte) 0x20, (byte) 0x0D, (byte) 0x0A, (byte) 0x87, (byte) 0x0A})
+            new Magic(hex("0000000C6A5020200D0A870A"))
     ),
     JPEGXL(
             Pattern.compile("(?i).*\\.jxl"),
-            new Magic(new byte[]{(byte) 0xFF, (byte) 0x0A}),
-            new Magic(new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x0C, (byte) 0x4A, (byte) 0x58, (byte) 0x4C, (byte) 0x20, (byte) 0x0D, (byte) 0x0A, (byte) 0x87, (byte) 0x0A})
+            new Magic(hex("FF0A")),
+            new Magic(hex("0000000C4A584C200D0A870A"))
     ),
     MP3(
             Pattern.compile("(?i).*\\.mp3"),
-            new Magic(new byte[]{(byte) 0xFF, (byte) 0xFB}),
-            new Magic(new byte[]{(byte) 0xFF, (byte) 0xF3}),
-            new Magic(new byte[]{(byte) 0xFF, (byte) 0xF2}),
-            new Magic(new byte[]{(byte) 0x49, (byte) 0x44, (byte) 0x33})
+            new Magic(hex("FFFB")),
+            new Magic(hex("FFF3")),
+            new Magic(hex("FFF2")),
+            new Magic(hex("494433"))
     ),
     MS_OFFICE(
             Pattern.compile("(?i).*\\.(?:doc|xls|ppt|msg)"),
-            new Magic(new byte[]{(byte) 0xD0, (byte) 0xCF, (byte) 0x11, (byte) 0xE0, (byte) 0xA1, (byte) 0xB1, (byte) 0x1A, (byte) 0xE1})
+            new Magic(hex("D0CF11E0A1B11AE1"))
     ),
     OGG(
             Pattern.compile("(?i).*\\.og[gav]"),
@@ -86,7 +87,7 @@ public enum FileType implements Predicate<byte[]> {
     ),
     PNG(
             Pattern.compile("(?i).*\\.png"),
-            new Magic(new byte[]{(byte) 0x89, (byte) 0x50, (byte) 0x4E, (byte) 0x47, (byte) 0x0D, (byte) 0x0A, (byte) 0x1A, (byte) 0x0A})
+            new Magic(hex("89504E470D0A1A0A"))
     ),
     RTF(
             Pattern.compile("(?i).*\\.rtf"),
@@ -94,26 +95,26 @@ public enum FileType implements Predicate<byte[]> {
     ),
     TIFF(
             Pattern.compile("(?i).*\\.tiff?"),
-            new Magic(new byte[]{(byte) 0x49, (byte) 0x49, (byte) 0x2A, (byte) 0x00}),
-            new Magic(new byte[]{(byte) 0x4D, (byte) 0x4D, (byte) 0x00, (byte) 0x2A})
+            new Magic(hex("49492A00")),
+            new Magic(hex("4D4D002A"))
     ),
     WAV(
             Pattern.compile("(?i).*\\.wav"),
             new Magic(
-                    new MagicPart(0, "RIFF"),
+                    new MagicPart("RIFF"),
                     new MagicPart(8, "WAVE")
             )
     ),
     WEBP(
             Pattern.compile("(?i).*\\.webp"),
             new Magic(
-                    new MagicPart(0, "RIFF"),
+                    new MagicPart("RIFF"),
                     new MagicPart(8, "WEBP")
             )
     ),
     WMF(
             Pattern.compile("(?i).*\\.wmf"),
-            new Magic(new byte[]{(byte) 0xD7, (byte) 0xCD, (byte) 0xC6, (byte) 0x9A})
+            new Magic(hex("D7CDC69A"))
     ),
     XCF(
             Pattern.compile("(?i).*\\.xcf"),
@@ -121,15 +122,15 @@ public enum FileType implements Predicate<byte[]> {
     ),
     ZIP(
             Pattern.compile("(?i).*\\.(?:zip|aar|apk|docx|epub|ipa|jar|kmz|maff|odp|ods|odt|pk3|pk4|pptx|usdz|vsdx|xlsx|xpi)"),
-            new Magic(new byte[]{(byte) 0x50, (byte) 0x4B, (byte) 0x03, (byte) 0x04})
+            new Magic(hex("504B0304"))
     ),
     ZIP_EMPTY(
             Pattern.compile("(?i).*\\.(?:zip|aar|apk|docx|epub|ipa|jar|kmz|maff|odp|ods|odt|pk3|pk4|pptx|usdz|vsdx|xlsx|xpi)"),
-            new Magic(new byte[]{(byte) 0x50, (byte) 0x4B, (byte) 0x05, (byte) 0x06})
+            new Magic(hex("504B0506"))
     ),
     ZIP_SPANNED(
             Pattern.compile("(?i).*\\.(?:zip|aar|apk|docx|epub|ipa|jar|kmz|maff|odp|ods|odt|pk3|pk4|pptx|usdz|vsdx|xlsx|xpi)"),
-            new Magic(new byte[]{(byte) 0x50, (byte) 0x4B, (byte) 0x07, (byte) 0x08})
+            new Magic(hex("504B0708"))
     );
 
     private final Pattern fileNamePattern;
@@ -204,8 +205,16 @@ public enum FileType implements Predicate<byte[]> {
         private final int offset;
         private final byte[] magic;
 
+        private MagicPart(String magic) {
+            this(0, magic);
+        }
+
         private MagicPart(int offset, String magic) {
             this(offset, magic.getBytes(US_ASCII));
+        }
+
+        private MagicPart(byte[] magic) {
+            this(0, magic);
         }
 
         private MagicPart(int offset, byte[] magic) {
@@ -224,21 +233,38 @@ public enum FileType implements Predicate<byte[]> {
         }
     }
 
-    public static Optional<FileType> determineFileType(final InputStream in) throws IOException {
+    private static byte[] hex(String s) {
+        Objects.requireNonNull(s, "s");
+        if (s.length() == 0) {
+            return new byte[0];
+        }
+        if (s.length() % 2 != 0) {
+            throw new IllegalArgumentException("String length must be even");
+        }
+        final int length = s.length() / 2;
+        final byte[] val = new byte[length];
+        for (int i = 0; i < length; i++) {
+            int index = i * 2;
+            val[i] = (byte) (Integer.parseInt(s.substring(index, index + 2), 16) & 0xFF);
+        }
+        return val;
+    }
+
+    static Optional<FileType> determineFileType(final InputStream in) throws IOException {
         return determineFileType(in, FileType.values());
     }
 
-    public static Optional<FileType> determineFileType(final InputStream in, final String fileName) throws IOException {
+    static Optional<FileType> determineFileType(final InputStream in, final String fileName) throws IOException {
         return determineFileType(in, determineFileTypeByFileName(fileName));
     }
 
-    public static FileType[] determineFileTypeByFileName(String fileName) {
+    static FileType[] determineFileTypeByFileName(String fileName) {
         return Arrays.stream(FileType.values())
                 .filter(it -> it.fileNameMatches(fileName))
                 .toArray(FileType[]::new);
     }
 
-    public static Optional<FileType> determineFileType(final InputStream in, final FileType... fileTypes) throws IOException {
+    static Optional<FileType> determineFileType(final InputStream in, final FileType... fileTypes) throws IOException {
         requireNonNull(in, "in");
         if (!in.markSupported()) {
             throw new IllegalArgumentException("InputStream doesn't support mark");
