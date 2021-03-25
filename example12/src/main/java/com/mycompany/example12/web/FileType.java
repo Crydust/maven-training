@@ -39,6 +39,10 @@ public enum FileType implements Predicate<byte[]> {
             Pattern.compile("(?i).*\\.com"),
             new Magic(hex("C9"))
     ),
+    DEB(
+            Pattern.compile("(?i).*\\.deb"),
+            new Magic(hex("213C617263683E"))
+    ),
     DMG(
             Pattern.compile("(?i).*\\.dmg"),
             new Magic(hex("7801730D626260"))
@@ -140,10 +144,19 @@ public enum FileType implements Predicate<byte[]> {
             Pattern.compile("(?i).*\\.7z"),
             new Magic(hex("377ABCAF271C"))
     ),
+    SWF(
+            Pattern.compile("(?i).*\\.swf"),
+            new Magic("CWS"),
+            new Magic("FWS")
+    ),
     TIFF(
             Pattern.compile("(?i).*\\.tiff?"),
             new Magic(hex("49492A00")),
             new Magic(hex("4D4D002A"))
+    ),
+    WASM(
+            Pattern.compile("(?i).*\\.wasm"),
+            new Magic(hex("0061736d"))
     ),
     WAV(
             Pattern.compile("(?i).*\\.wav"),
@@ -162,6 +175,14 @@ public enum FileType implements Predicate<byte[]> {
     WMF(
             Pattern.compile("(?i).*\\.wmf"),
             new Magic(hex("D7CDC69A"))
+    ),
+    WOFF(
+            Pattern.compile("(?i).*\\.woff"),
+            new Magic("wOFF")
+    ),
+    WOFF2(
+            Pattern.compile("(?i).*\\.woff2"),
+            new Magic("wOF2")
     ),
     XCF(
             Pattern.compile("(?i).*\\.xcf"),
