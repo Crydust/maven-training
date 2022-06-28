@@ -15,3 +15,4 @@ example10 - Maven modules
 example11 - Maven modules, with java 9 module descriptors
 example12 - Simple website
 example13 - Selenium tests (for example12)
+example14 - Maven modules, with a bom
