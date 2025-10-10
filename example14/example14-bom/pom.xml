@@ -12,7 +12,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <json.version>20250517</json.version>
         <junit.version>6.0.0</junit.version>
-        <hamcrest.version>2.2</hamcrest.version>
+        <hamcrest.version>3.0</hamcrest.version>
     </properties>
     <dependencyManagement>
         <dependencies>

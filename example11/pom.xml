@@ -19,7 +19,7 @@
         <maven.compiler.release>11</maven.compiler.release>
         <json.version>20250517</json.version>
         <junit.version>6.0.0</junit.version>
-        <hamcrest.version>2.2</hamcrest.version>
+        <hamcrest.version>3.0</hamcrest.version>
         <!-- maven-compiler-plugin:3.7.0 is the first one to truly support module-info.java -->
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
         <failsafe-plugin.version>2.22.2</failsafe-plugin.version>
