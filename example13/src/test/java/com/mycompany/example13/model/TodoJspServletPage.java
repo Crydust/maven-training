@@ -9,6 +9,8 @@ import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.stalenessOf;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
@@ -36,7 +38,7 @@ public class TodoJspServletPage {
 
     public TodoJspServletPage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, 10L);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public static TodoJspServletPage init(WebDriver driver) {

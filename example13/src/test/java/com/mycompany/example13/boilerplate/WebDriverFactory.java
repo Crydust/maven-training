@@ -1,7 +1,6 @@
 package com.mycompany.example13.boilerplate;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.urlToBe;
-
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.PooledObject;
@@ -14,11 +13,12 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import java.time.Duration;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.urlToBe;
 
 class WebDriverFactory extends BasePooledObjectFactory<WebDriver> {
     private final String browserName;
@@ -47,7 +47,7 @@ class WebDriverFactory extends BasePooledObjectFactory<WebDriver> {
     public void activateObject(PooledObject<WebDriver> p) {
         final WebDriver driver = p.getObject();
         driver.get("about:blank");
-        new WebDriverWait(driver, 10).until(urlToBe("about:blank"));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(urlToBe("about:blank"));
         driver.manage().deleteAllCookies();
     }
 
@@ -91,9 +91,6 @@ class WebDriverFactory extends BasePooledObjectFactory<WebDriver> {
             case "ie":
                 WebDriverManager.iedriver().setup();
                 return new InternetExplorerDriver();
-            case "opera":
-                WebDriverManager.operadriver().setup();
-                return new OperaDriver();
             case "safari":
                 return new SafariDriver();
             default:

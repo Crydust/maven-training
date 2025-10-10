@@ -1,12 +1,14 @@
 package com.mycompany.example13.model;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class IndexPage {
 
@@ -24,7 +26,7 @@ public class IndexPage {
 
     public static IndexPage init(WebDriver driver) {
         final IndexPage page = PageFactory.initElements(driver, IndexPage.class);
-        new WebDriverWait(driver, 10L).until(visibilityOf(page.helloServletLink));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(page.helloServletLink));
         return page;
     }
 
