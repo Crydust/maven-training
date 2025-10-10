@@ -2,15 +2,15 @@ Maven training
 
 Now updated for java 11 and junit 5.
 
-example1 - A minimal project
-example2 - Executable jar without dependencies
-example3 - Executable jar with a dependency
-example4 - Executable jar with a dependency (create an application zip)
-example5 - Executable jar with a dependency (create an uber-jar)
-example6 - Executable jar with a dependency (create a minimal uber-jar)
-example7 - Unittests
-example8 - Unittests and integrationtest
-example9 - Code coverage
+example01 - A minimal project
+example02 - Executable jar without dependencies
+example03 - Executable jar with a dependency
+example04 - Executable jar with a dependency (create an application zip)
+example05 - Executable jar with a dependency (create an uber-jar)
+example06 - Executable jar with a dependency (create a minimal uber-jar)
+example07 - Unittests
+example08 - Unittests and integrationtest
+example09 - Code coverage
 example10 - Maven modules
 example11 - Maven modules, with java 9 module descriptors
 example12 - Simple website

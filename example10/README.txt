@@ -3,7 +3,7 @@ example10
 
 Dependencies, Unittests, Integrationtests, Code coverage ... and modules.
 Oh my!
-Don't be too afraid by the apparent complexity, this is just example9 split up into pieces.
+Don't be too afraid by the apparent complexity, this is just example09 split up into pieces.
 
 example10 is an aggregate module.
 This means when you build it you also build the modules it contains.
@@ -12,7 +12,7 @@ example10 is also the parent module for each of tis submodules.
 This means the submodules inherit its properties, dependencies and plugins.
 
 The main module is "example10-cli", which contains the application.
-It uses the assembly plugin just like example4 to create an application zip.
+It uses the assembly plugin just like example04 to create an application zip.
 
 The dependencies go as follows:
 example10-cli == compile ==> example10-api

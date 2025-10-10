@@ -6,15 +6,15 @@
     <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>example1</module>
-        <module>example2</module>
-        <module>example3</module>
-        <module>example4</module>
-        <module>example5</module>
-        <module>example6</module>
-        <module>example7</module>
-        <module>example8</module>
-        <module>example9</module>
+        <module>example01</module>
+        <module>example02</module>
+        <module>example03</module>
+        <module>example04</module>
+        <module>example05</module>
+        <module>example06</module>
+        <module>example07</module>
+        <module>example08</module>
+        <module>example09</module>
         <module>example10</module>
         <module>example11</module>
         <module>example12</module>
