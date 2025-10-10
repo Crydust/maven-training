@@ -1,6 +1,6 @@
 Maven training
 
-Now updated for java 11 and junit 5.
+Now updated for java 17 and junit 6.
 
 example01 - A minimal project
 example02 - Executable jar without dependencies
