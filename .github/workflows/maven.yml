@@ -15,7 +15,7 @@ jobs:
           java-version: "17"
           cache: maven
       - name: Compile and run tests with maven
-        run: mvn -B verify
+        run: mvn -B clean verify -Dmaven.build.cache.enabled=false
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
