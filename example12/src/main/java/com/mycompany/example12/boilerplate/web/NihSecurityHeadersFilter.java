@@ -31,10 +31,8 @@ public class NihSecurityHeadersFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if (response instanceof HttpServletResponse) {
-            final HttpServletResponse httpResponse = (HttpServletResponse) response;
+        if (response instanceof HttpServletResponse httpResponse) {
             httpResponse.setHeader("X-Frame-Options", "SAMEORIGIN");
-            httpResponse.setHeader("X-XSS-Protection", "1; mode=block");
             httpResponse.setHeader("X-Content-Type-Options", "nosniff");
         }
         chain.doFilter(request, response);

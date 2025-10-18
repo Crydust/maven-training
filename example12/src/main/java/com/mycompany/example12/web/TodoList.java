@@ -1,5 +1,6 @@
 package com.mycompany.example12.web;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Iterator;
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 public final class TodoList implements Iterable<TodoItem>, Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private final Set<TodoItem> items;
 
@@ -58,28 +60,13 @@ public final class TodoList implements Iterable<TodoItem>, Serializable {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + Objects.hashCode(this.items);
-        return hash;
+    public boolean equals(Object o) {
+        if (!(o instanceof TodoList todoItems)) return false;
+        return Objects.equals(items, todoItems.items);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final TodoList other = (TodoList) obj;
-        if (!Objects.equals(this.items, other.items)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return Objects.hashCode(items);
     }
-
 }

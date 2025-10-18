@@ -25,9 +25,9 @@ class HelloServletIT {
     void helloServletPageEchosNickname() {
         final String name;
         if (browser.getDriverOnlySupportsCharactersInTheBMP()) {
-            name = UUID.randomUUID().toString() + " é ' \" _uD83E_uDD84 <plaintext>";
+            name = UUID.randomUUID() + " é ' \" _uD83E_uDD84 <plaintext>";
         } else {
-            name = UUID.randomUUID().toString() + " é ' \" \uD83E\uDD84 <plaintext>";
+            name = UUID.randomUUID() + " é ' \" \uD83E\uDD84 <plaintext>";
         }
         final HelloServletPage page = browser
                 .openIndexPage()

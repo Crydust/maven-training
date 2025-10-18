@@ -48,7 +48,7 @@ public class TodoJspServletPage {
     }
 
     public boolean isCurrentPage() {
-        return driver.getTitle().equals("Servlet TodoJspServlet");
+        return "Servlet TodoJspServlet".equals(driver.getTitle());
     }
 
     public TodoJspServletPage add(String text) {

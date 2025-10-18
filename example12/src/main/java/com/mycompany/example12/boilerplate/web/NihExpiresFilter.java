@@ -36,8 +36,7 @@ public class NihExpiresFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if (response instanceof HttpServletResponse) {
-            final HttpServletResponse httpResponse = (HttpServletResponse) response;
+        if (response instanceof HttpServletResponse httpResponse) {
             // Http 1.1
             httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             // Http 1.0

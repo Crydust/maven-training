@@ -31,7 +31,7 @@ public class HelloServletPage {
     }
 
     public boolean isCurrentPage() {
-        return driver.getTitle().equals("Servlet HelloServlet");
+        return "Servlet HelloServlet".equals(driver.getTitle());
     }
 
     public HelloServletPage sayHello(String name) {

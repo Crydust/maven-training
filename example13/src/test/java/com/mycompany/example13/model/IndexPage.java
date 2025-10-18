@@ -31,7 +31,7 @@ public class IndexPage {
     }
 
     public boolean isCurrentPage() {
-        return driver.getTitle().equals("Start Page");
+        return "Start Page".equals(driver.getTitle());
     }
 
     public HelloServletPage clickHelloServletLink() {

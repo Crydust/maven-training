@@ -60,6 +60,9 @@ public class BrowserResource implements AfterEachCallback {
 
     public String getSessionCookie() {
         Cookie cookie = getDriver().manage().getCookieNamed("JSESSIONID");
+        if (cookie == null) {
+            throw new RuntimeException("JSESSIONID cookie not found");
+        }
         return String.format("JSESSIONID=%s; Path=%s%s%s",
                 cookie.getValue(),
                 cookie.getPath(),

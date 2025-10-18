@@ -21,8 +21,9 @@
                 todoList.empty is not allowed because empty is a keyword
                 todoList['empty'] would work
                 todoList.isEmpty() works in recent el versions
+                fn:length doesn't work on Iterable
                 --%>
-                <c:when test="${empty todoList or todoList.isEmpty()}">
+                <c:when test="${empty todoList or todoList['empty']}">
                     <p id='items_empty'>The list is empty.</p>
                 </c:when>
                 <c:otherwise>

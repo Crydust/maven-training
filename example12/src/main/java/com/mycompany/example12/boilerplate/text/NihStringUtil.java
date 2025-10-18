@@ -1,6 +1,5 @@
 package com.mycompany.example12.boilerplate.text;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +7,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.mycompany.example12.boilerplate.BoilerplateException;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public final class NihStringUtil {
 
@@ -17,18 +16,10 @@ public final class NihStringUtil {
 
     static {
         HTML_MAP = new HashMap<>();
-        final boolean paranoid = true;
-        if (paranoid) {
-            for (int i = 0; i < 256; i++) {
-                if (Character.isLetterOrDigit(i)) {
-                    continue;
-                }
-                HTML_MAP.put(
-                        String.valueOf((char) i),
-                        String.format("&#x%02X;", i));
+        for (int i = 0; i < 256; i++) {
+            if (Character.isLetterOrDigit(i)) {
+                continue;
             }
-        } else {
-            final int i = 39;
             HTML_MAP.put(
                     String.valueOf((char) i),
                     String.format("&#x%02X;", i));
@@ -108,12 +99,7 @@ public final class NihStringUtil {
         int queryStart = url.indexOf('?');
         final int fragmentStart = url.indexOf('#');
         final String encodedKeyValuePair;
-        try {
-            encodedKeyValuePair = URLEncoder.encode(key, "UTF-8") + '=' + URLEncoder.encode(value, "UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            // impossible
-            throw new BoilerplateException(ex);
-        }
+        encodedKeyValuePair = URLEncoder.encode(key, UTF_8) + '=' + URLEncoder.encode(value, UTF_8);
         if (queryStart == -1 && fragmentStart == -1) {
             return url + '?' + encodedKeyValuePair;
         }
@@ -133,7 +119,6 @@ public final class NihStringUtil {
                 fragment = null;
             }
         } else {
-            assert fragmentStart != -1;
             prefix = url.substring(0, fragmentStart);
             query = null;
             fragment = url.substring(fragmentStart + 1);
@@ -151,9 +136,7 @@ public final class NihStringUtil {
             sb.append('#');
             sb.append(fragment);
         }
-        final String result = sb.toString();
-        assert result.length() == length;
-        return result;
+        return sb.toString();
     }
 
 }

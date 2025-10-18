@@ -1,6 +1,7 @@
 package com.mycompany.example12.web;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "TodoJspServlet", urlPatterns = {TodoJspServlet.URLPATTERN})
 public class TodoJspServlet extends HttpServlet {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public static final String URLPATTERN = "/TodoJspServlet";

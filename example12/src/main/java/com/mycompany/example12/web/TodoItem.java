@@ -1,11 +1,13 @@
 package com.mycompany.example12.web;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 public final class TodoItem implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private UUID id;
     private boolean done;
@@ -50,28 +52,13 @@ public final class TodoItem implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.id);
-        return hash;
+    public boolean equals(Object o) {
+        if (!(o instanceof TodoItem todoItem)) return false;
+        return Objects.equals(id, todoItem.id);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final TodoItem other = (TodoItem) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
-
 }

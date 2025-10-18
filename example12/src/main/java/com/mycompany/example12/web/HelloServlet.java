@@ -4,6 +4,7 @@ import static com.mycompany.example12.boilerplate.text.NihStringUtil.escapeHtml4
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serial;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "HelloServlet", urlPatterns = {HelloServlet.URLPATTERN})
 public class HelloServlet extends HttpServlet {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public static final String URLPATTERN = "/HelloServlet";

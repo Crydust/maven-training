@@ -7,7 +7,7 @@
     </configuration>
     <input>
         <global>
-            <glob>{*.java,*.xml,*.properties,*.bat,*.sh,**/resources/META-INF/services/*}</glob>
+            <glob>{*.java,*.xml,*.properties,*.bat,*.sh,*.jsp,*.tag,*.html,*.htm,**/resources/META-INF/services/*}</glob>
         </global>
     </input>
 </cache>
